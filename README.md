@@ -97,3 +97,12 @@ Please follow the following steps for running this application:
 		BookShop API is up and running 
 
 	-Start calling the other APIs
+
+**Docker Image**
+
+	-Pull the docker image using the following command
+		docker pull sureshmishra50/online-bookshop:latest
+
+**GIT URL**
+
+	https://github.com/sureshmishra49/bookshop-api
