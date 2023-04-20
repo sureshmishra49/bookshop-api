@@ -112,7 +112,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/bookshop-api/v1/checkout",
+					"raw": "http://localhost:8080/bookshop-api/v1/books/checkout",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -121,6 +121,7 @@
 					"path": [
 						"bookshop-api",
 						"v1",
+						"books",
 						"checkout"
 					]
 				},
@@ -146,11 +147,26 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"bookId\": 1,\r\n    \"name\": \"BOOKNAME_UPDATEsdsdD\",\r\n    \"description\": \"BOOK_DESCP\",\r\n    \"author\": \"AUTHORNAME\",\r\n    \"bookType\": \"BOOKTYPE\",\r\n    \"price\": 10,\r\n    \"isbn\": \"123466\"\r\n}",
+					"raw": "{\r\n    \"bookId\": 1,\r\n    \"name\": \"PALACE\",\r\n    \"description\": \"COMIC BOOK\",\r\n    \"author\": \"MIKE\",\r\n    \"price\": 500,\r\n    \"isbn\": \"1234004321\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -458,20 +474,7 @@
 				],
 				"body": {
 					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "username",
-							"value": "sc_fayek4",
-							"description": "onboarding-sf-ngo    ni-pilot  sc_fayek4  ",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "Welcome1$",
-							"description": "{{password}}",
-							"type": "text"
-						}
-					]
+					"formdata": []
 				},
 				"url": {
 					"raw": "http://localhost:8080/bookshop-api/v1/books/health",
