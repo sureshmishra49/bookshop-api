@@ -22,11 +22,12 @@ public class BooksInfo extends BaseResult {
     private String bookType;
     private BigDecimal price;
     private String isbn;
+    private String createdDate;
 
     public BooksInfo() {
     }
 
-    public BooksInfo(Long  id, String name, String description, String author, String bookType, BigDecimal price, String isbn) {
+    public BooksInfo(Long  id, String name, String description, String author, String bookType, BigDecimal price, String isbn, String createdDate) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -34,6 +35,7 @@ public class BooksInfo extends BaseResult {
         this.bookType = bookType;
         this.price = price;
         this.isbn = isbn;
+        this.createdDate = createdDate;
     }
 
     @JsonIgnore

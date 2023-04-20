@@ -39,10 +39,11 @@ Please follow the following steps for running this application:
 	-Once the build is successful, right click on the following file to run the spring boot application
 			BookShopApplication.java
 
-**Api Credentials**
+**Api Security with Basic Auth**
 
-	-UserName - user
-	-Password - password
+	Use following Basic Auth credentails to call API 
+		-UserName - user
+		-Password - password
 
 **Flow of API calls**
 
@@ -74,9 +75,16 @@ Please follow the following steps for running this application:
 		Example: http://localhost:8080/bookshop-api/v2/api-docs
 
 	-H2DB Console: <base_url>/bookshop-api/h2-ui
-		Example: http://localhost:8080/bookshop-api/h2-ui
 
-		<base_url>: http://localhost:8080
+		1- Open the following URl
+			Example: http://localhost:8080/bookshop-api/h2-ui
+		2- Use the following value 
+			JDBC_URL: jdbc:h2:mem:bookshop_db
+			User Name: sa
+			Password: Leave this empty
+		3- Click Connect to open the DB
+
+		
 
 **Run in Docker** 
 
@@ -97,6 +105,8 @@ Please follow the following steps for running this application:
 		BookShop API is up and running 
 
 	-Start calling the other APIs
+
+	-Docker logs <container_id>
 
 **Docker Image**
 

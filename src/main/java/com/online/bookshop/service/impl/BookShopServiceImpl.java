@@ -1,7 +1,5 @@
 package com.online.bookshop.service.impl;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.online.bookshop.dto.*;
 import com.online.bookshop.exception.BusinessException;
 import com.online.bookshop.helper.BookShopApiHelper;
@@ -18,14 +16,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 @Service("bookShopService")
 public class BookShopServiceImpl implements BookShopService {
-
     protected static final Logger logger = LoggerFactory.getLogger(BookShopServiceImpl.class);
-    private final Gson gsonObj = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 
     private final BookShopRequestValidator requestValidator;
     private final BookShopApiHelper bookShopApiHelper;
@@ -39,7 +40,7 @@ public class BookShopServiceImpl implements BookShopService {
 
     @Override
     public BooksResult getBooks() {
-        BooksResult result = null;
+        BooksResult result;
         List<BooksInfo> responseList = new ArrayList<>();
         try {
             bookRepository.findAll().forEach(bookObject -> {
@@ -50,7 +51,8 @@ public class BookShopServiceImpl implements BookShopService {
                         .setAuthor(bookObject.getAuthor())
                         .setBookType(bookObject.getBookType())
                         .setPrice(bookObject.getPrice())
-                        .setIsbn(bookObject.getIsbn());
+                        .setIsbn(bookObject.getIsbn())
+                        .setCreatedDate(bookObject.getCreatedDate()!=null?bookObject.getCreatedDate().toString():EMPTY);
                 responseList.add(booksInfo);
             });
             result = CollectionUtils.isEmpty(responseList) ? BooksResultConverter.populateNoDataFoundResponse() : BooksResultConverter.populateAllBooksSuccessfulResponse(responseList);
@@ -63,7 +65,7 @@ public class BookShopServiceImpl implements BookShopService {
 
     @Override
     public BooksResult getBookById(Long bookId) {
-        BooksResult result = null;
+        BooksResult result;
         BooksRequest request = new BooksRequest();
         try {
             request.setBookId(bookId);
@@ -79,8 +81,9 @@ public class BookShopServiceImpl implements BookShopService {
 
     @Override
     public BooksResult addBook(AddBookRequest request) {
-        BooksResult result = null;
+        BooksResult result;
         try{
+            bookShopApiHelper.validateIfBookExistsWithSameIsbn(request);
             requestValidator.validateAddBookApi(request);
             logger.debug("Validate AddBookApi. bookName -{}, bookType -{} ", request.getName(), request.getBookType());
             Book book = bookShopApiHelper.mapDTOToBO(request);
@@ -97,7 +100,7 @@ public class BookShopServiceImpl implements BookShopService {
     @Override
     public BooksResult deleteBookById(Long bookId) {
         BooksRequest request = new BooksRequest();
-        BooksResult result = null;
+        BooksResult result;
         request.setBookId(bookId);
         try {
             requestValidator.validateBooksByIdApi(request);
@@ -118,7 +121,7 @@ public class BookShopServiceImpl implements BookShopService {
 
     @Override
     public BooksResult updateBookByIdAndIsbn(BooksRequest request) {
-        BooksResult result = null;
+        BooksResult result;
         try {
             requestValidator.validateUpdateBookApi(request);
             logger.debug("Validate updateBookByIdAndIsbn. bookId -{}, isbn -{} ", request.getBookId(), request.getIsbn());
@@ -140,11 +143,11 @@ public class BookShopServiceImpl implements BookShopService {
     @Override
     @Transactional
     public CheckoutBooksResult processCheckout(CheckoutBooksRequest request) {
-        CheckoutBooksResult result = null;;
+        CheckoutBooksResult result;
         try {
             requestValidator.validateCheckoutBooksApi(request);
             logger.debug("Validate processCheckout. bookList size -{} ", request.getBooksList().size());
-            Map<String, BigDecimal> totalAmountBasedOnClassification = new HashMap<>();
+            Map<String, BigDecimal> totalAmountBasedOnClassification;
             totalAmountBasedOnClassification = request.getBooksList().stream().collect(
                     Collectors.groupingBy(CheckoutRequest::getBookType, Collectors.mapping(CheckoutRequest::getPrice, Collectors.reducing(BigDecimal.ZERO, BigDecimal::add))));
 
@@ -152,7 +155,7 @@ public class BookShopServiceImpl implements BookShopService {
             result = bookShopApiHelper.populatePaymentResponse(totalAmountBasedOnClassification, request);
         } catch (Exception ex) {
             logger.error("BusinessException thrown. message -{}, detailedMessage -{} ", ex.getMessage(), ex);
-            result = (ex instanceof BusinessException) ? CheckoutBooksResultConverter.populateCheckoutBooksBusinessExceptionResult(request, ((BusinessException) ex).getErrorCode()) :  CheckoutBooksResultConverter.populateSystemErrorInCheckOutApiResult();
+            result = (ex instanceof BusinessException) ? CheckoutBooksResultConverter.populateCheckoutBooksBusinessExceptionResult(((BusinessException) ex).getErrorCode()) :  CheckoutBooksResultConverter.populateSystemErrorInCheckOutApiResult();
         }
         return result;
     }

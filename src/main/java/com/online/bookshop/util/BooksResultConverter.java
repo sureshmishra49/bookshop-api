@@ -3,7 +3,6 @@ package com.online.bookshop.util;
 import com.online.bookshop.constants.RequestStatus;
 import com.online.bookshop.dto.AddBookRequest;
 import com.online.bookshop.dto.BooksInfo;
-import com.online.bookshop.dto.BooksRequest;
 import com.online.bookshop.dto.BooksResult;
 import com.online.bookshop.exception.BookShopErrorCodeMapping;
 import com.online.bookshop.exception.ErrorCode;
@@ -12,6 +11,8 @@ import com.online.bookshop.repository.entities.Book;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 public class BooksResultConverter {
 
@@ -23,6 +24,10 @@ public class BooksResultConverter {
     }
 
     public static BooksResult populateSingleBookSuccessfulResponse(Book book) {
+        return getBooksResult(book);
+    }
+
+    private static BooksResult getBooksResult(Book book) {
         List<BooksInfo> responseList = new ArrayList<>();
         BooksInfo booksInfo = new BooksInfo()
                 .setId(book.getId())
@@ -31,7 +36,8 @@ public class BooksResultConverter {
                 .setAuthor(book.getAuthor())
                 .setBookType(book.getBookType())
                 .setPrice(book.getPrice())
-                .setIsbn(book.getIsbn());
+                .setIsbn(book.getIsbn())
+                .setCreatedDate(book.getCreatedDate()!=null?book.getCreatedDate().toString():EMPTY);
         responseList.add(booksInfo);
 
         return BooksResult.builder()
@@ -41,21 +47,7 @@ public class BooksResultConverter {
     }
 
     public static BooksResult populateBookAdditionSuccessfulResponse(Book book) {
-        List<BooksInfo> responseList = new ArrayList<>();
-        BooksInfo booksInfo = new BooksInfo()
-                .setId(book.getId())
-                .setName(book.getName())
-                .setDescription(book.getDescription())
-                .setAuthor(book.getAuthor())
-                .setBookType(book.getBookType())
-                .setPrice(book.getPrice())
-                .setIsbn(book.getIsbn());
-        responseList.add(booksInfo);
-
-        return BooksResult.builder()
-                .bookInfo(responseList)
-                .status(RequestStatus.SUCCESS.toString())
-                .build();
+        return getBooksResult(book);
     }
 
     public static BooksResult populateBookAdditionFailedResponse(AddBookRequest book, ErrorCode errorCode) {

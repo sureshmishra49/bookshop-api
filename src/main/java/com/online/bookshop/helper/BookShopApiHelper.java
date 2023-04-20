@@ -1,13 +1,14 @@
 package com.online.bookshop.helper;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.online.bookshop.constants.BookType;
 import com.online.bookshop.constants.RequestStatus;
 import com.online.bookshop.dto.AddBookRequest;
 import com.online.bookshop.dto.BooksRequest;
 import com.online.bookshop.dto.CheckoutBooksRequest;
 import com.online.bookshop.dto.CheckoutBooksResult;
+import com.online.bookshop.exception.BookShopErrorCodeMapping;
+import com.online.bookshop.exception.BusinessException;
+import com.online.bookshop.repository.BookRepository;
 import com.online.bookshop.repository.entities.Book;
 import com.online.bookshop.util.CheckoutBooksResultConverter;
 import org.slf4j.Logger;
@@ -16,17 +17,22 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Map;
 
-import static com.online.bookshop.constants.AppConstant.*;
 import static com.online.bookshop.constants.AppConstant.comicDiscountPercentage;
+import static com.online.bookshop.constants.AppConstant.fictionDiscountPercentage;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Component
 public class BookShopApiHelper {
-
     private static final Logger logger = LoggerFactory.getLogger(BookShopApiHelper.class);
-    private final Gson gsonObj = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
+
+    private final BookRepository bookRepository;
+
+    public BookShopApiHelper(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     public Book mapDTOToBO(AddBookRequest request) {
         Book book = new Book();
@@ -36,6 +42,8 @@ public class BookShopApiHelper {
         book.setBookType(request.getBookType());
         book.setPrice(request.getPrice());
         book.setIsbn(request.getIsbn());
+        book.setCreatedDate(new Date());
+        book.setUpdatedDate(new Date());
         return book;
     }
 
@@ -46,6 +54,7 @@ public class BookShopApiHelper {
         books.setBookType(isNotBlank(request.getBookType())?request.getBookType():books.getBookType());
         books.setPrice(request.getPrice()!=null?request.getPrice():books.getPrice());
         books.setIsbn(isNotBlank(request.getIsbn())?request.getIsbn():books.getIsbn());
+        books.setUpdatedDate(new Date());
     }
 
     public CheckoutBooksResult populatePaymentResponse(Map<String, BigDecimal> totalAmountBasedOnClassification, CheckoutBooksRequest request) {
@@ -73,6 +82,11 @@ public class BookShopApiHelper {
         result.setTotalPayableAmount(result.getTotalPriceAfterDiscount());
         result.setStatus(RequestStatus.SUCCESS.toString());
         return result;
+    }
+
+    public void validateIfBookExistsWithSameIsbn(AddBookRequest request) throws BusinessException {
+        Book book = bookRepository.findByIsbn(request.getIsbn());
+        if (book!=null && book.getId()!=null) throw new BusinessException(BookShopErrorCodeMapping.duplicateIsbnRequested());
     }
 }
 

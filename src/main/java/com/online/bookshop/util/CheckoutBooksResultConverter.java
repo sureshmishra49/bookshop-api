@@ -14,7 +14,6 @@ public class CheckoutBooksResultConverter {
     protected static final Logger logger = LoggerFactory.getLogger(CheckoutBooksResultConverter.class);
 
     public static CheckoutBooksResult populateCheckoutSuccessfulResponse(CheckoutBooksRequest request) {
-        CheckoutBooksResult result = new CheckoutBooksResult();
         List<BooksInfo> responseList = new ArrayList<>();
         try {
             request.getBooksList().stream().forEach(bookInfo -> {
@@ -37,7 +36,7 @@ public class CheckoutBooksResultConverter {
                 .build();
     }
 
-    public static CheckoutBooksResult populateCheckoutBooksBusinessExceptionResult(CheckoutBooksRequest request, ErrorCode errorCode) {
+    public static CheckoutBooksResult populateCheckoutBooksBusinessExceptionResult(ErrorCode errorCode) {
         CheckoutBooksResult result = new CheckoutBooksResult();
         result.setStatus(RequestStatus.FAILURE.toString());
         result.setErrorMessage(errorCode);

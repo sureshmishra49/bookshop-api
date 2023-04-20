@@ -23,6 +23,11 @@ public class AddBookApiTestMocks {
         return populateAndReturnAddBookApiResponse(request, code);
     }
 
+    public static BooksResult mockResponse_AddBookWithDuplicateISBN(AddBookRequest request) {
+        ErrorCode code = new ErrorCode("DUPLICATE_ISBN_REQUESTED", "Book with same ISBN already exists");
+        return populateAndReturnAddBookApiResponse(request, code);
+    }
+
     public static BooksResult mockResponse_AddBookWithOutBookName(AddBookRequest request) {
         ErrorCode code = new ErrorCode("BOOK_NAME_REQUIRED", "Book Name is required");
         return populateAndReturnAddBookApiResponse(request, code);
@@ -48,6 +53,10 @@ public class AddBookApiTestMocks {
         return populateAndReturnAddBookApiResponse(request, code);
     }
 
+    public static BooksResult mockResponse_AddBookWithNegativeBookPrice(AddBookRequest request) {
+        ErrorCode code = new ErrorCode("NEGATIVE_BOOK_PRICE_NOT_ALLOWED", "Book Price cannot be in negative required");
+        return populateAndReturnAddBookApiResponse(request, code);
+    }
     private static BooksResult populateAndReturnAddBookApiResponse(AddBookRequest request, ErrorCode code) {
         List<BooksInfo> responseList = new ArrayList<>();
         BooksInfo booksInfo = new BooksInfo()

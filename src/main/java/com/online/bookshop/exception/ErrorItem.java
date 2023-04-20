@@ -15,14 +15,6 @@ public class ErrorItem implements Serializable, Comparable {
         this.propertyName = propertyName;
     }
 
-    public String getPropertyName() {
-        return propertyName;
-    }
-
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

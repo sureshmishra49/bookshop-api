@@ -97,6 +97,17 @@ class BookShopApplicationTests {
 		Assert.assertEquals(result.getErrorMessage().getCode(), "BOOK_ISBN_REQUIRED");
 	}
 	@Test
+	public void addBookWithDuplicateISBN() {
+		AddBookRequest request = mockAddBookRequest();
+		request.setIsbn(EMPTY);
+		when(bookShopService.addBook(request)).thenReturn(mockResponse_AddBookWithDuplicateISBN(request));
+		ResponseEntity<?> response = controller.createBooks(request);
+		Assert.assertNotNull(response.getStatusCode().value());
+		BooksResult result = (BooksResult) response.getBody();
+		Assert.assertEquals(result.getStatus(), "FAILURE");
+		Assert.assertEquals(result.getErrorMessage().getCode(), "DUPLICATE_ISBN_REQUESTED");
+	}
+	@Test
 	public void addBookWithOutBookAuthor() {
 		AddBookRequest request = mockAddBookRequest();
 		request.setIsbn(EMPTY);
@@ -128,6 +139,17 @@ class BookShopApplicationTests {
 		BooksResult result = (BooksResult) response.getBody();
 		Assert.assertEquals(result.getStatus(), "FAILURE");
 		Assert.assertEquals(result.getErrorMessage().getCode(), "BOOK_PRICE_REQUIRED");
+	}
+	@Test
+	public void addBookWithNegativeBookPrice() {
+		AddBookRequest request = mockAddBookRequest();
+		request.setIsbn(EMPTY);
+		when(bookShopService.addBook(request)).thenReturn(mockResponse_AddBookWithNegativeBookPrice(request));
+		ResponseEntity<?> response = controller.createBooks(request);
+		Assert.assertNotNull(response.getStatusCode().value());
+		BooksResult result = (BooksResult) response.getBody();
+		Assert.assertEquals(result.getStatus(), "FAILURE");
+		Assert.assertEquals(result.getErrorMessage().getCode(), "NEGATIVE_BOOK_PRICE_NOT_ALLOWED");
 	}
 	/*
     	addBook API Test cases - ends here

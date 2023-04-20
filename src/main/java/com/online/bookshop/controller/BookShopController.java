@@ -1,9 +1,6 @@
 package com.online.bookshop.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.online.bookshop.dto.*;
-import com.online.bookshop.helper.BookShopApiHelper;
 import com.online.bookshop.service.BookShopService;
 import com.online.bookshop.util.Utils;
 import io.swagger.annotations.Api;
@@ -19,16 +16,13 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "BookShop APIs")
 public class BookShopController {
     private static final Logger logger = LoggerFactory.getLogger(BookShopController.class);
-    private final Gson gsonObj = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
 
     private final BookShopService bookShopService;
     private final Utils utils;
-    private final BookShopApiHelper bookShopApiHelper;
 
-    public BookShopController(BookShopService bookShopService, Utils utils, BookShopApiHelper bookShopApiHelper) {
+    public BookShopController(BookShopService bookShopService, Utils utils) {
         this.bookShopService = bookShopService;
         this.utils = utils;
-        this.bookShopApiHelper = bookShopApiHelper;
     }
 
     @RequestMapping(value = "/health", method = RequestMethod.GET)
@@ -59,7 +53,7 @@ public class BookShopController {
     public ResponseEntity<BooksResult> createBooks(@RequestBody AddBookRequest request) {
         utils.logRequestAndResponse("createBooks", request, null);
         BooksResult result = bookShopService.addBook(request);
-        utils.logRequestAndResponse("createBooks", request, result);
+        utils.logRequestAndResponse("createBooks", null, result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

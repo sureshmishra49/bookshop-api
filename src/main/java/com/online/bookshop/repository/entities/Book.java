@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Table(name = "BOOK")
@@ -28,17 +29,25 @@ public class Book {
     private BigDecimal price;
     @Column(name = "ISBN", length = 255)
     private String isbn;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATE_DATE")
+    private Date createdDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "UPDATED_DATE")
+    private Date updatedDate;
 
     public Book() {
     }
 
-    public Book(String name, String description, String author, String bookType, BigDecimal price, String isbn) {
+    public Book(String name, String description, String author, String bookType, BigDecimal price, String isbn, Date createdDate, Date updatedDate) {
         this.name = name;
         this.description = description;
         this.author = author;
         this.bookType = bookType;
         this.price = price;
         this.isbn = isbn;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
     }
 
     @Override

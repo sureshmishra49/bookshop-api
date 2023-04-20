@@ -1,14 +1,13 @@
 package com.online.bookshop.constants;
 
 public enum BookType {
-    FICTION(1L, "FICTION"),
-    COMIC(2L, "COMIC");
+    FICTION ("FICTION"),
+    COMIC("COMIC");
 
     private final String value;
-    private Long id;
 
-    BookType(Long id, String value) {
-        this.id = id;
+
+    BookType(String value) {
         this.value = value;
     }
 
@@ -16,8 +15,5 @@ public enum BookType {
         return value;
     }
 
-    public Long getId() {
-        return id;
-    }
 }
 
