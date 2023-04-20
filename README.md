@@ -39,6 +39,11 @@ Please follow the following steps for running this application:
 	-Once the build is successful, right click on the following file to run the spring boot application
 			BookShopApplication.java
 
+**Api Credentials**
+
+	-UserName - user
+	-Password - password
+
 **Flow of API calls**
 
 	1-addBook API - http://localhost:8080/bookshop-api/v1/books (POST) - To add books
@@ -72,14 +77,23 @@ Please follow the following steps for running this application:
 		Example: http://localhost:8080/bookshop-api/h2-ui
 
 		<base_url>: http://localhost:8080
-		
-**Run in Docker**
-	-Open the Terminal in your IDE and go to the folder that contains Dockerfile in the project
-	-Run the following command
-		-docker build --platform linux/amd64 -t  online-bookshop .
-		-docker run -p 8080:8080 -t online-bookshop
-	-Call the following URL to check the health of the BookShop application
-		http://localhost:8080/bookshop-api/v1/books/health
+
+**Run in Docker** 
+
+	-Open the Terminal in your IDE and go to the folder that contains Dockerfile in the project 
+
+	-Run the following command 
+
+		Build the application
+			$docker build --platform linux/amd64 -t online-bookshop . 
+
+		Run the application 
+			$docker run -p 8080:8080 -t online-bookshop 
+
+	-Call the following URL to check the health of the BookShop application 
+			http://localhost:8080/bookshop-api/v1/books/health
+
 	-The app is up and running fine if you see the following output
-		BookShop API is up and running
+		BookShop API is up and running 
+
 	-Start calling the other APIs
