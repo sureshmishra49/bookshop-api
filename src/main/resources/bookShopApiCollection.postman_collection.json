@@ -1,0 +1,495 @@
+{
+	"info": {
+		"_postman_id": "08613654-7a45-4673-9732-d071d16d1132",
+		"name": "bookShopApiCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1009482"
+	},
+	"item": [
+		{
+			"name": "addBook",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"token\", responseBody);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"GLASS PALACE\",\r\n    \"description\":\"Drama Novel\",\r\n    \"author\":\"PAUL\",\r\n    \"bookType\":\"FICTION\",\r\n    \"price\":500,\r\n    \"isbn\":\"1234004321\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/bookshop-api/v1/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bookshop-api",
+						"v1",
+						"books"
+					]
+				},
+				"description": "request access token that expires after one hour"
+			},
+			"response": []
+		},
+		{
+			"name": "checkOutBooks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"token\", responseBody);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"booksList\": [\r\n        {\r\n            \"bookId\": 1,\r\n            \"name\": \"asde\",\r\n            \"description\": \"test\",\r\n            \"author\": \"Shajahan\",\r\n            \"bookType\": \"fiction\",\r\n            \"price\": 100,\r\n            \"isbn\": \"sdsd\"\r\n        },\r\n        {\r\n            \"bookId\": 3,\r\n            \"name\": \"tyty\",\r\n            \"description\": \"test\",\r\n            \"author\": \"Shajahan\",\r\n            \"bookType\": \"comic\",\r\n            \"price\": 300,\r\n            \"isbn\": \"sdsd\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/bookshop-api/v1/checkout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bookshop-api",
+						"v1",
+						"checkout"
+					]
+				},
+				"description": "request access token that expires after one hour"
+			},
+			"response": []
+		},
+		{
+			"name": "updateBook",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"token\", responseBody);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bookId\": 1,\r\n    \"name\": \"BOOKNAME_UPDATEsdsdD\",\r\n    \"description\": \"BOOK_DESCP\",\r\n    \"author\": \"AUTHORNAME\",\r\n    \"bookType\": \"BOOKTYPE\",\r\n    \"price\": 10,\r\n    \"isbn\": \"123466\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/bookshop-api/v1/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bookshop-api",
+						"v1",
+						"books"
+					]
+				},
+				"description": "request access token that expires after one hour"
+			},
+			"response": []
+		},
+		{
+			"name": "getBookById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"token\", responseBody);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "c610fd4b-6ec6-46a6-a968-e1e1b811ebb9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "sc_fayek4",
+							"description": "onboarding-sf-ngo    ni-pilot  sc_fayek4  ",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "Welcome1$",
+							"description": "{{password}}",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/bookshop-api/v1/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bookshop-api",
+						"v1",
+						"books",
+						"1"
+					]
+				},
+				"description": "request access token that expires after one hour"
+			},
+			"response": []
+		},
+		{
+			"name": "getAllBooks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"token\", responseBody);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "c610fd4b-6ec6-46a6-a968-e1e1b811ebb9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "sc_fayek4",
+							"description": "onboarding-sf-ngo    ni-pilot  sc_fayek4  ",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Welcome1$",
+							"description": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/bookshop-api/v1/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bookshop-api",
+						"v1",
+						"books"
+					]
+				},
+				"description": "request access token that expires after one hour"
+			},
+			"response": []
+		},
+		{
+			"name": "deleteBookById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"token\", responseBody);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "c610fd4b-6ec6-46a6-a968-e1e1b811ebb9",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "sc_fayek4",
+							"description": "onboarding-sf-ngo    ni-pilot  sc_fayek4  ",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Welcome1$",
+							"description": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/bookshop-api/v1/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bookshop-api",
+						"v1",
+						"books",
+						"1"
+					]
+				},
+				"description": "request access token that expires after one hour"
+			},
+			"response": []
+		},
+		{
+			"name": "helthCheck",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"token\", responseBody);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "c610fd4b-6ec6-46a6-a968-e1e1b811ebb9",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "sc_fayek4",
+							"description": "onboarding-sf-ngo    ni-pilot  sc_fayek4  ",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Welcome1$",
+							"description": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/bookshop-api/v1/books/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bookshop-api",
+						"v1",
+						"books",
+						"health"
+					]
+				},
+				"description": "request access token that expires after one hour"
+			},
+			"response": []
+		}
+	]
+}
