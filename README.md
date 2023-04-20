@@ -69,6 +69,6 @@ Please follow the following steps for running this application:
 		Example: http://localhost:8080/bookshop-api/v2/api-docs
 
 	-H2DB Console: <base_url>/bookshop-api/h2-ui
-		Example: http://localhost:8080/h2-ui
+		Example: http://localhost:8080/bookshop-api/h2-ui
 
 		<base_url>: http://localhost:8080
