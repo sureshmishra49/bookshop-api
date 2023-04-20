@@ -96,7 +96,7 @@ Please follow the following steps for running this application:
 			$docker build --platform linux/amd64 -t online-bookshop . 
 
 		Run the application 
-			$docker run -p 8080:8080 -t online-bookshop 
+			$docker run --name=online-bookshop  -itd -p 8080:8080 sureshmishra50/online-bookshop:latest 
 
 	-Call the following URL to check the health of the BookShop application 
 			http://localhost:8080/bookshop-api/v1/books/health
