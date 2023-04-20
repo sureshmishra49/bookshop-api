@@ -12,6 +12,7 @@ public class BookShopErrorCodeMapping {
     public static ErrorCode systemError() { return new ErrorCode("SYSTEM_ERROR", "System error"); }
 
     public static ErrorCode inputRequired() {  return new ErrorCode("INPUT_REQUIRED", "Request input is required"); }
+    public static ErrorCode bookListIsEmpty() {  return new ErrorCode("BOOK_LIST_REQUIRED", "Book list is required"); }
 
 
 }

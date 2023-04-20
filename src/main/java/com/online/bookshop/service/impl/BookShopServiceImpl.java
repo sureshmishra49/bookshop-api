@@ -82,8 +82,10 @@ public class BookShopServiceImpl implements BookShopService {
         BooksResult result = null;
         try{
             requestValidator.validateAddBookApi(request);
+            logger.debug("Validate AddBookApi. bookName -{}, bookType -{} ", request.getName(), request.getBookType());
             Book book = bookShopApiHelper.mapDTOToBO(request);
             bookRepository.save(book);
+            logger.debug("Book added. bookId -{}, bookName -{}, bookType -{} ", book.getId(), request.getName(), request.getBookType());
             result = BooksResultConverter.populateBookAdditionSuccessfulResponse(book);
         } catch (Exception ex) {
             logger.error("BusinessException thrown in addBook api. message -{}, detailedMessage -{} ", ex.getMessage(), ex);
@@ -99,8 +101,10 @@ public class BookShopServiceImpl implements BookShopService {
         request.setBookId(bookId);
         try {
             requestValidator.validateBooksByIdApi(request);
+            logger.debug("Validate DeleteBookById. bookId -{} ", request.getBookId());
             Optional<Book> book = bookRepository.findById(request.getBookId());
             if (book.isPresent()) {
+                logger.debug("Book is going to be deleted. bookId -{}, bookName -{}, bookType -{} ", book.get().getId(), book.get().getName(), book.get().getBookType());
                 bookRepository.deleteById(request.getBookId());
                 return BooksResultConverter.populateBookDeletionSuccessfulResponse(book.get());
             }
@@ -117,10 +121,12 @@ public class BookShopServiceImpl implements BookShopService {
         BooksResult result = null;
         try {
             requestValidator.validateUpdateBookApi(request);
+            logger.debug("Validate updateBookByIdAndIsbn. bookId -{}, isbn -{} ", request.getBookId(), request.getIsbn());
             List<Book> book = bookRepository.findByIdAndIsbn(request.getBookId(), request.getIsbn());
             if (!CollectionUtils.isEmpty(book)) {
                 bookShopApiHelper.mapUpdateData(book.get(0), request);
                 bookRepository.save(book.get(0));
+                logger.debug("Book is going to be updated. bookId -{}, bookName -{}, bookType -{} ", book.get(0).getId(), book.get(0).getName(), book.get(0).getBookType());
                 return BooksResultConverter.populateBookAdditionSuccessfulResponse(book.get(0));
             }
             result = BooksResultConverter.populateNoDataFoundResponse();
@@ -137,13 +143,12 @@ public class BookShopServiceImpl implements BookShopService {
         CheckoutBooksResult result = null;;
         try {
             requestValidator.validateCheckoutBooksApi(request);
+            logger.debug("Validate processCheckout. bookList size -{} ", request.getBooksList().size());
             Map<String, BigDecimal> totalAmountBasedOnClassification = new HashMap<>();
-            Map<String, Long> counting = request.getBooksList().stream().collect(
-                    Collectors.groupingBy(CheckoutRequest::getBookType, Collectors.counting()));
             totalAmountBasedOnClassification = request.getBooksList().stream().collect(
                     Collectors.groupingBy(CheckoutRequest::getBookType, Collectors.mapping(CheckoutRequest::getPrice, Collectors.reducing(BigDecimal.ZERO, BigDecimal::add))));
 
-            logger.debug("totalAmountBasedOnClassification --> {} ", totalAmountBasedOnClassification);
+            logger.debug("totalAmountBasedOnClassification -{} ", totalAmountBasedOnClassification);
             result = bookShopApiHelper.populatePaymentResponse(totalAmountBasedOnClassification, request);
         } catch (Exception ex) {
             logger.error("BusinessException thrown. message -{}, detailedMessage -{} ", ex.getMessage(), ex);

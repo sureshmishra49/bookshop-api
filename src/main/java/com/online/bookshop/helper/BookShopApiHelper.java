@@ -56,10 +56,12 @@ public class BookShopApiHelper {
             for(String bookType : totalAmountBasedOnClassification.keySet()) {
                 totalAmount = totalAmount.add(totalAmountBasedOnClassification.get(bookType));
                 if (BookType.FICTION.getValue().equalsIgnoreCase(bookType) && fictionDiscountPercentage.compareTo(BigDecimal.ZERO)>0) {
+                    logger.debug("Applying discount if the bookType is FICTION. fictionDiscountPercentage -{} ", fictionDiscountPercentage);
                     discountedAmount = discountedAmount.add(totalAmountBasedOnClassification.get(bookType))
                             .multiply(fictionDiscountPercentage);
                 }
                 if (BookType.COMIC.getValue().equalsIgnoreCase(bookType) && comicDiscountPercentage.compareTo(BigDecimal.ZERO)>0) {
+                    logger.debug("Applying discount if the bookType is COMIC. fictionDiscountPercentage -{} ", comicDiscountPercentage);
                     discountedAmount = discountedAmount.add(totalAmountBasedOnClassification.get(bookType))
                             .multiply(comicDiscountPercentage);
                 }

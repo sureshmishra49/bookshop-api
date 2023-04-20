@@ -39,14 +39,18 @@ public class BookShopController {
     @ApiOperation(value = "Get All Books")
     @GetMapping
     public ResponseEntity<BooksResult> getBooks() {
+        logger.debug("Get all books");
         BooksResult result = bookShopService.getBooks();
+        utils.logRequestAndResponse("getBooks", null, result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Get a single book based on id")
     @GetMapping(value = "/{bookId}")
     public ResponseEntity<BooksResult> getBookById(@PathVariable("bookId") Long bookId) {
+        logger.debug("Get book for bookId -{} ", bookId);
         BooksResult result = bookShopService.getBookById(bookId);
+        utils.logRequestAndResponse("getBookById", null, result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -62,14 +66,18 @@ public class BookShopController {
     @ApiOperation(value = "Delete a book for the given bookId")
     @DeleteMapping(value = "/{bookId}")
     public ResponseEntity<BooksResult> deleteBookById(@PathVariable("bookId") Long bookId) {
+        logger.debug("Delete book with bookId -{} ", bookId);
         BooksResult result = bookShopService.deleteBookById(bookId);
+        utils.logRequestAndResponse("deleteBookById", null, result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Update the details for the given bookId")
     @PutMapping
     public ResponseEntity<BooksResult> updateBook(@RequestBody BooksRequest request) {
+        utils.logRequestAndResponse("updateBook", request, null);
         BooksResult result = bookShopService.updateBookByIdAndIsbn(request);
+        utils.logRequestAndResponse("updateBook", request, result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

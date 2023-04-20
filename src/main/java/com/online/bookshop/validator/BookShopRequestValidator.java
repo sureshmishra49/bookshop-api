@@ -8,6 +8,7 @@ import com.online.bookshop.dto.CheckoutBooksRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -37,6 +38,7 @@ public class BookShopRequestValidator {
 
     public void validateCheckoutBooksApi(CheckoutBooksRequest request) throws BusinessException {
         if (request==null) throw new BusinessException(BookShopErrorCodeMapping.inputRequired());
+        if (CollectionUtils.isEmpty(request.getBooksList())) throw new BusinessException(BookShopErrorCodeMapping.bookListIsEmpty());
     }
 
     public boolean isNumeric(String strNum) {
