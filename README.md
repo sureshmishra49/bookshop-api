@@ -62,16 +62,13 @@ Please follow the following steps for running this application:
 
 **Project URLs**
 
-	-API Urls: 
+	-Swagger Documentation: <base_url>/bookshop-api/swagger-ui.html
+		Example: http://localhost:8080/bookshop-api/swagger-ui.html
 
-		1- Bookshop API: <base_url>/bookshop-api/v1/books/{resourceName}
-
-		2- CheckoutAPI: <base_url>/bookshop-api/v1/checkout/{resourceName}
-
-	-Swagger Documentation: <base_url>/bookshop-api/v2/api-docs
-
-		-JSON Api-Docs: <base_url>/bookshop-api/swagger-ui.html
+	-JSON Api-Docs: <base_url>/bookshop-api/v2/api-docs
+		Example: http://localhost:8080/bookshop-api/v2/api-docs
 
 	-H2DB Console: <base_url>/bookshop-api/h2-ui
+		Example: http://localhost:8080/h2-ui
 
-	for example: <base_url>: http://localhost:8080
+		<base_url>: http://localhost:8080
